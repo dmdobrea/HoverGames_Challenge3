@@ -37,10 +37,12 @@ class VideoDataPublisher(Node):
 
         height_descriptor = ParameterDescriptor(description='Image height [480]')
         self.declare_parameter('height', 480, height_descriptor)
+        
+        filePath_descriptor = ParameterDescriptor(description='File path to the mp4 video')
+        self.declare_parameter('file_path', '/home/user/FilmTest.mp4', filePath_descriptor)  # path to the video, like '/home/user/FilmTest.mp4' or 'None'
 
-
-        # Create the publisher. This publisher will publish an Image
-        # to the video_frames topic. The queue size is 10 messages.
+        # Create the publisher. This publisher will publish images of type Image
+        # to the video_frames topic.
         self.publisher_ = self.create_publisher(Image, 'video_frames', qos_profile)
       
         # We will publish a message every 0.1 seconds
@@ -55,8 +57,9 @@ class VideoDataPublisher(Node):
         my_width    = self.get_parameter('width').get_parameter_value().integer_value
         my_height   = self.get_parameter('height').get_parameter_value().integer_value
         my_NavQplus = self.get_parameter('NavQplus').get_parameter_value().integer_value
+        my_filePath = self.get_parameter('file_path').get_parameter_value().string_value
 
-        self.vs = checkVideoDevices (None, 0, my_NavQplus, my_width, my_height, my_verbose)
+        self.vs = checkVideoDevices (my_filePath, 0, my_NavQplus, my_width, my_height, my_verbose)
 
         # Used to convert image format between ROS 2 and OpenCV
         self.br = CvBridge()
@@ -66,7 +69,7 @@ class VideoDataPublisher(Node):
         Timer Callback function.
         """
 
-        # gets the parameter(s) from the node
+        # gets the parameter from the node
         my_verbose = self.get_parameter('verbose').get_parameter_value().integer_value
         
         # Capture frame-by-frame
