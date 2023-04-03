@@ -25,6 +25,8 @@ setup(
         'console_scripts': [
             'videoHGd     = agri_hovergames.videoPub:main',
             'broadcastHGd = agri_hovergames.videoWiFibroadcast:main',
+            'flightHGd    = agri_hovergames.flightControl:main',
+            'healthHGd    = agri_hovergames.healthPlant:main',
         ],
     },
 )
