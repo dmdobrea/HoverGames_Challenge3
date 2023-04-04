@@ -54,7 +54,7 @@ $ ros2 run agri_hovergames  broadcastHGd
 $ ros2 run agri_hovergames  flightHGd
 $ ros2 run agri_hovergames  healthHGd
 ```
-Or in a global way through a launch file:
+Or in a global way through a [launch file](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/launch/python_parameters_launch.py):
 ```
 $ ros2 launch agri_hovergames python_parameters_launch.py
 ```
