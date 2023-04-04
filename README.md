@@ -28,18 +28,18 @@ In this project, I have developed an intelligent system to assess the healthines
 #### Main software components developed for NXP HoverGames Challenge 3
 
 The components that implement the software part of the **agriHoverGames** drone were developed as a single **ROS 2** package consisting of 4 files written in Python:
-1. videoPub.py:
+1. [videoPub.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/videoPub.py):
 ![videoPub.py file info](./Imgs/01_file.JPG)
-2. videoWiFibroadcast.py
+2. [videoWiFibroadcast.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/videoWiFibroadcast.py)
 ![videoWiFibroadcast.py file info](./Imgs/02_file.JPG)
-3. flightControl.py and
+3. [flightControl.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/flightControl.py) and
 ![flightControl.py file info](./Imgs/03_file.JPG)
-4. healthPlant.py 
+4. [healthPlant.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/healthPlant.py) 
 ![healthPlant.py file info](./Imgs/04_file.JPG)
 
-Each Python file incorporates a node of the application, as was presented above: (1) `video_publisher_node` in videoPub.py, (2) video_brodcast_node in videoWiFibroadcast.py, (3) `flight_control_node` in flightControl.py, and (4)  `health_plant_node` in healthPlant.py. Communication and synchronization between nodes are done through topics.
+Each Python file incorporates a node of the application, as was presented above: (1) `video_publisher_node` in [videoPub.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/videoPub.py), (2) video_brodcast_node in [videoWiFibroadcast.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/videoWiFibroadcast.py), (3) `flight_control_node` in [flightControl.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/flightControl.py), and (4)  `health_plant_node` in [healthPlant.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/healthPlant.py). Communication and synchronization between nodes are done through topics.
 
-The healthPlant.py file implements the detection system that detects abnormal leaves based on the TensorFlow Lite model obtained. First, the detection system starts the detection process when the agriHoverGames drone is in Offboard mode. The `health_plant_node` takes note of this fact from the `flight_control_node node` through the **/flight_offboard** topic published by `flight_control_node`, and in this mode, the detection process starts. The `health_plant_node` publishes two topics related to the detection process: **/detect_vitis** and **/detect_leafroll**. These two topics post at each second the area of lives for each class detected in the previous second and at every 10 seconds (as a negative number) the total area of diseased leaves from the point when the system was set to Offboard mode. When the agriHoverGames drone is not in the Offboard mode will publish (as positive numbers) every 5 seconds the area of the affected leaves discovered when the drone was in **Offboard mode**.
+The [healthPlant.py](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/healthPlant.py) file implements the detection system that detects abnormal leaves based on the TensorFlow Lite model obtained. First, the detection system starts the detection process when the agriHoverGames drone is in Offboard mode. The `health_plant_node` takes note of this fact from the `flight_control_node node` through the **/flight_offboard** topic published by `flight_control_node`, and in this mode, the detection process starts. The `health_plant_node` publishes two topics related to the detection process: **/detect_vitis** and **/detect_leafroll**. These two topics post at each second the area of lives for each class detected in the previous second and at every 10 seconds (as a negative number) the total area of diseased leaves from the point when the system was set to Offboard mode. When the agriHoverGames drone is not in the Offboard mode will publish (as positive numbers) every 5 seconds the area of the affected leaves discovered when the drone was in **Offboard mode**.
 
 The `flight_control_node node` is connected to the PX4 autopilot, being able to control agriHoverGames based on velocity and position modes. It also interrogates the drone status being able to know the status of the drone at each moment. This node can arm, disarm, takeoff, land etc., the drone accordingly with necessities resulting from the offboard control.
 
