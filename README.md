@@ -47,4 +47,15 @@ Each of the following nodes `video_publisher_node`, `flight_control_node`, and `
 
 The `video_brodcast_node` can subscribe to a specific image topic (**/video_frames**, **/video_flight**, or **/video_detect**) – based on ***source_sel*** parameter (0 for **/video_frames**, 1 for **/video_flight** and 2 for **/video_detect**) and stream the images to the [ZeroMQ video server](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/ZeroMQ_video_server/server_ZMQ.py) through the **ZeroMQ** streaming protocol based on the **WiFi** link. To have a real-time solution, the images obtained from a specific topic are compressed to the **jpeg** format and streamed. The compression factor can vary between 0 to 100. A higher value represents a more quality image.
 
+Each of these nodes can be executed individually through:
+```
+$ ros2 run agri_hovergames  videoHGd
+$ ros2 run agri_hovergames  broadcastHGd
+$ ros2 run agri_hovergames  flightHGd
+$ ros2 run agri_hovergames  healthHGd
+```
+Or in a global way through a launch file:
+```
+$ ros2 launch agri_hovergames python_parameters_launch.py
+```
 A very specific [**Python** module](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/submodules/VideoDevices.py) was included in the **agri_hovergames** package. Through this [**Python** module](https://github.com/dmdobrea/HoverGames_Challenge3/blob/main/agri_hovergames/agri_hovergames/submodules/VideoDevices.py), it is possible to configure the video input stream so that images can be taken from one of the two cameras that can be connected to the **NavQ Plus** board, one of the cameras connected to the **Raspberry Pi** board, or images can be taken from an input video file. The need for this configuration function was given by the development and testing of the code both on the **NavQ Plus** board and on the **Raspberry Pi** as well as by using previously recorded video files. An example of such a file can be found in the Video directory on GitHub.
